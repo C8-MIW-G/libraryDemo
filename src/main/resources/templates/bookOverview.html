@@ -14,7 +14,7 @@
         <th>Author</th>
     </tr>
     <tr th:each="book : ${allBooks}">
-        <td th:text="${book.bookId}"></td>
+        <td><a th:href="@{/book/id/{bookId}(bookId=${book.bookId})}" th:text="${book.bookId}"></a></td>
         <td th:text="${book.title}"></td>
         <td th:text="${book.author}"></td>
     </tr>
