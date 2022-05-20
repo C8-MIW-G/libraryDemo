@@ -7,7 +7,10 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+
+import java.util.Optional;
 
 /**
  * @author Vincent Velthuizen <v.r.velthuizen@pl.hanze.nl>
@@ -28,6 +31,17 @@ public class BookController {
     protected String showBookOverview(Model model) {
         model.addAttribute("allBooks", bookRepository.findAll());
         return "bookOverview";
+    }
+
+    @GetMapping("/book/id/{bookId}")
+    protected String showBookDetails(@PathVariable("bookId") long bookId, Model model) {
+        Optional<Book> book = bookRepository.findById(bookId);
+        if (book.isPresent()) {
+            model.addAttribute("book", book.get());
+            return "bookDetails";
+        } else {
+            return "redirect:/book/all";
+        }
     }
 
     @GetMapping("/book/new")
