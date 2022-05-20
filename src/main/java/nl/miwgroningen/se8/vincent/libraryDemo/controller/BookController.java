@@ -3,6 +3,7 @@ package nl.miwgroningen.se8.vincent.libraryDemo.controller;
 import nl.miwgroningen.se8.vincent.libraryDemo.model.Book;
 import nl.miwgroningen.se8.vincent.libraryDemo.repository.BookRepository;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 /**
@@ -18,6 +19,12 @@ public class BookController {
 
     public BookController(BookRepository bookRepository) {
         this.bookRepository = bookRepository;
+    }
+
+    @GetMapping({"/book/all", "/books"})
+    protected String showBookOverview(Model model) {
+        model.addAttribute("allBooks", bookRepository.findAll());
+        return "bookOverview";
     }
 
     @GetMapping("/book/new")
