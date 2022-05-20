@@ -4,11 +4,14 @@ import nl.miwgroningen.se8.vincent.libraryDemo.model.Book;
 import nl.miwgroningen.se8.vincent.libraryDemo.repository.BookRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 
 /**
  * @author Vincent Velthuizen <v.r.velthuizen@pl.hanze.nl>
- *
+ * <p>
  * Facilitate interactions around books
  */
 
@@ -28,9 +31,16 @@ public class BookController {
     }
 
     @GetMapping("/book/new")
-    protected String createNewBook() {
-        Book book = new Book();
-        bookRepository.save(book);
-        return "welcome";
+    protected String createNewBook(Model model) {
+        model.addAttribute("book", new Book());
+        return "bookForm";
+    }
+
+    @PostMapping("/book/new")
+    protected String saveNewBook(@ModelAttribute("book") Book book, BindingResult result) {
+        if (!result.hasErrors()) {
+            bookRepository.save(book);
+        }
+        return "redirect:/book/all";
     }
 }
