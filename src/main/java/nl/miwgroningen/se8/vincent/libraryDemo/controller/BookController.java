@@ -1,6 +1,7 @@
 package nl.miwgroningen.se8.vincent.libraryDemo.controller;
 
 import nl.miwgroningen.se8.vincent.libraryDemo.model.Book;
+import nl.miwgroningen.se8.vincent.libraryDemo.repository.AuthorRepository;
 import nl.miwgroningen.se8.vincent.libraryDemo.repository.BookRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,9 +22,11 @@ import java.util.Optional;
 @Controller
 public class BookController {
 
-    private BookRepository bookRepository;
+    private final AuthorRepository authorRepository;
+    private final BookRepository bookRepository;
 
-    public BookController(BookRepository bookRepository) {
+    public BookController(AuthorRepository authorRepository, BookRepository bookRepository) {
+        this.authorRepository = authorRepository;
         this.bookRepository = bookRepository;
     }
 
@@ -58,6 +61,7 @@ public class BookController {
     @GetMapping("/book/new")
     protected String createNewBook(Model model) {
         model.addAttribute("book", new Book());
+        model.addAttribute("allAuthors", authorRepository.findAll());
         return "bookForm";
     }
 

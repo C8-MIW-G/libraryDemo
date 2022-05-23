@@ -16,7 +16,11 @@
             </tr>
             <tr>
                 <td>Author</td>
-                <td><input type="text" th:field="*{author}"></td>
+                <td>
+                    <select multiple th:field="*{authors}">
+                        <option th:each="author : ${allAuthors}" th:value="${author.authorId}" th:text="${author.displayName}"></option>
+                    </select>
+                </td>
             </tr>
         </table>
         <input type="submit" value="Save this book">

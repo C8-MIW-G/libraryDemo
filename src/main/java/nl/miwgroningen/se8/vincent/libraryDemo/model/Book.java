@@ -1,11 +1,10 @@
 package nl.miwgroningen.se8.vincent.libraryDemo.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Vincent Velthuizen <v.r.velthuizen@pl.hanze.nl>
@@ -22,7 +21,8 @@ public class Book {
 
     private String title;
 
-    private String author;
+    @ManyToMany
+    private Set<Author> authors = new HashSet<>();
 
     @OneToMany(mappedBy = "book")
     private List<Copy> copies;
@@ -55,19 +55,27 @@ public class Book {
         this.title = title;
     }
 
-    public String getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(String author) {
-        this.author = author;
-    }
-
     public LocalDate getYearOfPublication() {
         return yearOfPublication;
     }
 
     public void setYearOfPublication(LocalDate yearOfPublication) {
         this.yearOfPublication = yearOfPublication;
+    }
+
+    public Set<Author> getAuthors() {
+        return authors;
+    }
+
+    public void setAuthors(Set<Author> authors) {
+        this.authors = authors;
+    }
+
+    public List<Copy> getCopies() {
+        return copies;
+    }
+
+    public void setCopies(List<Copy> copies) {
+        this.copies = copies;
     }
 }
