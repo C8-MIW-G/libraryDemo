@@ -3,7 +3,9 @@ package nl.miwgroningen.se8.vincent.libraryDemo.model;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import java.time.LocalDate;
+import java.util.List;
 
 /**
  * @author Vincent Velthuizen <v.r.velthuizen@pl.hanze.nl>
@@ -22,7 +24,20 @@ public class Book {
 
     private String author;
 
+    @OneToMany(mappedBy = "book")
+    private List<Copy> copies;
+
     private LocalDate yearOfPublication;
+
+    public int getNumberOfAvailableCopies() {
+        int count = 0;
+        for (Copy copy : copies) {
+            if (copy.getAvailable()) {
+                count++;
+            }
+        }
+        return count;
+    }
 
     public Long getBookId() {
         return bookId;
