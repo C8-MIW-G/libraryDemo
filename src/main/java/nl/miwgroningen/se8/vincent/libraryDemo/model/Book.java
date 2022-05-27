@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * @author Vincent Velthuizen <v.r.velthuizen@pl.hanze.nl>
@@ -37,6 +38,10 @@ public class Book {
             }
         }
         return count;
+    }
+
+    public String getAuthorNames() {
+        return String.join(", ", authors.stream().map(Author::getDisplayName).collect(Collectors.toSet()));
     }
 
     public Long getBookId() {

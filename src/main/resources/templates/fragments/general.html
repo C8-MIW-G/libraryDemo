@@ -10,13 +10,18 @@
 
 <body>
 <div th:fragment="navbar">
-    <li class="nav-item">
-        <a class="nav-link" th:href="@{/books}">Books</a>
-    </li>
+    <ul class="nav justify-content-center">
+        <li class="nav-item">
+            <a class="nav-link" th:href="@{/authors}">Auteurs</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" th:href="@{/books}">Books</a>
+        </li>
+    </ul>
 </div>
 
 <div th:fragment="footer">
-    <footer><p class="text-center text-muted">Copyright Vincent Velthuizen &copy; 2022</p></footer>
+    <footer><p class="text-center text-muted">Copyright Vincent Velthuizen &copy;2022</p></footer>
 </div>
 <div th:fragment="bottomScripts">
     <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
