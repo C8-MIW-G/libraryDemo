@@ -10,20 +10,7 @@
 <div class="container">
     <h1>Overview of all books</h1>
 
-    <table>
-        <tr>
-            <th>Title</th>
-            <th>Author</th>
-            <th># Available</th>
-            <th>Order new</th>
-        </tr>
-        <tr th:each="book : ${allBooks}">
-            <td><a th:href="@{/book/title/{bookTitle}(bookTitle=${book.title})}" th:text="${book.title}"></a></td>
-            <td th:text="${book.authorNames}"></td>
-            <td th:text="${book.numberOfAvailableCopies}"></td>
-            <td><a th:href="@{/copy/new/{bookId}(bookId=${book.bookId})}">Buy</a></td>
-        </tr>
-    </table>
+    <div th:replace="fragments/books :: bookTable"></div>
 </div>
 
 <div th:replace="fragments/general :: footer"></div>

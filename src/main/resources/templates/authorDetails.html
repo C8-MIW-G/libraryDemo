@@ -9,12 +9,7 @@
 <div class="container">
     <h1>Details van <span th:text="${author.displayName}"></span></h1>
 
-    <table>
-        <tr th:each="book : ${author.booksWritten}">
-            <td th:text="${book.title}"></td>
-            <td><span th:each="author : ${book.authors}"><a th:href="@{/authors/detail/{authorId}(authorId=${author.authorId})}" th:text="${author.displayName}"></a><br></span> </td>
-        </tr>
-    </table>
+    <div th:replace="fragments/books :: bookTable"></div>
 </div>
 
 <div th:replace="fragments/general :: footer"></div>

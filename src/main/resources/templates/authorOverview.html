@@ -17,12 +17,12 @@
         </tr>
         <tr th:each="author : ${allAuthors}">
             <td th:text="${author.authorId}"></td>
-            <td><a th:href="@{/authors/detail/{authorId}(authorId=${author.authorId})}" th:text="${author.displayName}"></a> </td>
+            <td><a th:href="@{/author/detail/{authorId}(authorId=${author.authorId})}" th:text="${author.displayName}"></a> </td>
         </tr>
     </table>
 
     <h2>Create new Author</h2>
-    <form th:action="@{authors/new}" method="post" th:object="${newAuthor}">
+    <form th:action="@{author/new}" method="post" th:object="${newAuthor}">
         <table>
             <tr>
                 <td>First name</td>

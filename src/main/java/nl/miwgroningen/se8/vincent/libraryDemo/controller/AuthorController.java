@@ -5,10 +5,7 @@ import nl.miwgroningen.se8.vincent.libraryDemo.repository.AuthorRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
@@ -19,6 +16,7 @@ import java.util.Optional;
  */
 
 @Controller
+@RequestMapping("/author")
 public class AuthorController {
     private AuthorRepository authorRepository;
 
@@ -26,24 +24,25 @@ public class AuthorController {
         this.authorRepository = authorRepository;
     }
 
-    @GetMapping("/authors")
+    @GetMapping("/")
     protected String showAuthorOverview(Model model) {
         model.addAttribute("allAuthors", authorRepository.findAll());
         model.addAttribute("newAuthor", new Author());
         return "authorOverview";
     }
 
-    @GetMapping("/authors/detail/{authorId}")
+    @GetMapping("/detail/{authorId}")
     protected String showAuthorDetails(@PathVariable("authorId") Long authorId, Model model) {
         Optional<Author> author = authorRepository.findById(authorId);
         if (author.isPresent()) {
             model.addAttribute("author", author.get());
+            model.addAttribute("allBooks", author.get().getBooksWritten());
             return "authorDetails";
         }
         return "redirect:/authors";
     }
 
-    @PostMapping("/authors/new")
+    @PostMapping("/new")
     protected String saveOrUpdateAuthor(@ModelAttribute("newAuthor") Author author, BindingResult result) {
         if (!result.hasErrors()) {
             authorRepository.save(author);
