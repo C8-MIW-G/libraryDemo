@@ -1,5 +1,8 @@
 package nl.miwgroningen.se8.vincent.libraryDemo.model;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -13,7 +16,7 @@ import java.util.stream.Collectors;
  * a book available for reading in our library
  */
 
-@Entity
+@Entity @Getter @Setter
 public class Book {
 
     @Id
@@ -38,49 +41,5 @@ public class Book {
             }
         }
         return count;
-    }
-
-    public String getAuthorNames() {
-        return String.join(", ", authors.stream().map(Author::getDisplayName).collect(Collectors.toSet()));
-    }
-
-    public Long getBookId() {
-        return bookId;
-    }
-
-    public void setBookId(Long bookId) {
-        this.bookId = bookId;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public LocalDate getYearOfPublication() {
-        return yearOfPublication;
-    }
-
-    public void setYearOfPublication(LocalDate yearOfPublication) {
-        this.yearOfPublication = yearOfPublication;
-    }
-
-    public Set<Author> getAuthors() {
-        return authors;
-    }
-
-    public void setAuthors(Set<Author> authors) {
-        this.authors = authors;
-    }
-
-    public List<Copy> getCopies() {
-        return copies;
-    }
-
-    public void setCopies(List<Copy> copies) {
-        this.copies = copies;
     }
 }

@@ -9,6 +9,14 @@
 <div class="container">
     <h1>Details van <span th:text="${book.title}"></span></h1>
 
+    <h2>Authors</h2>
+    <ul>
+        <li th:each="author : ${book.authors}">
+            <a th:href="@{/author/detail/{authorName}(authorName=${author.authorId})}"
+               th:text="${author.displayName}"></a>
+        </li>
+    </ul>
+
 <!--    <a th:href="@{/books/update/{bookTitle}(bookTitle=${book.title})}">Edit</a>-->
 </div>
 
