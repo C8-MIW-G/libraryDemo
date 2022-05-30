@@ -24,7 +24,7 @@ public class AuthorController {
         this.authorRepository = authorRepository;
     }
 
-    @GetMapping("/")
+    @GetMapping("")
     protected String showAuthorOverview(Model model) {
         model.addAttribute("allAuthors", authorRepository.findAll());
         model.addAttribute("newAuthor", new Author());
@@ -39,14 +39,14 @@ public class AuthorController {
             model.addAttribute("allBooks", author.get().getBooksWritten());
             return "authorDetails";
         }
-        return "redirect:/authors";
+        return "redirect:/author";
     }
 
     @PostMapping("/new")
     protected String saveOrUpdateAuthor(@ModelAttribute("newAuthor") Author author, BindingResult result) {
         if (!result.hasErrors()) {
             authorRepository.save(author);
-            return "redirect:/authors";
+            return "redirect:/author";
         } else {
             return "authorOverview";
         }
