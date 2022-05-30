@@ -4,6 +4,7 @@ import nl.miwgroningen.se8.vincent.libraryDemo.model.Book;
 import nl.miwgroningen.se8.vincent.libraryDemo.model.Copy;
 import nl.miwgroningen.se8.vincent.libraryDemo.repository.BookRepository;
 import nl.miwgroningen.se8.vincent.libraryDemo.repository.CopyRepository;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,6 +30,7 @@ public class CopyController {
     }
 
     @GetMapping("/new/{bookId}")
+    @Secured("ROLE_USER")
     protected String createNewCopy(@PathVariable("bookId") long bookId) {
         Optional<Book> book = bookRepository.findById(bookId);
         if (book.isPresent()) {

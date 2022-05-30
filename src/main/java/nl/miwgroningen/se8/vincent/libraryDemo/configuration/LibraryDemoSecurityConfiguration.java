@@ -1,13 +1,12 @@
 package nl.miwgroningen.se8.vincent.libraryDemo.configuration;
 
+import nl.miwgroningen.se8.vincent.libraryDemo.service.LibraryUserDetailService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 /**
@@ -18,6 +17,13 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 public class LibraryDemoSecurityConfiguration {
+
+    final LibraryUserDetailService libraryUserDetailService;
+
+    public LibraryDemoSecurityConfiguration(LibraryUserDetailService libraryUserDetailService) {
+        this.libraryUserDetailService = libraryUserDetailService;
+    }
+
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -38,13 +44,11 @@ public class LibraryDemoSecurityConfiguration {
     }
 
     @Bean
-    public InMemoryUserDetailsManager userDetailsService() {
-        UserDetails user = User.builder()
-                .username("user")
-                .password("$2a$10$t3oYUvyNmLwd6nvspbgB3umTC7F.xuv4X9vNxCDVPhAF1Zk2h6SXK")
-                .roles("USER")
-                .build();
-        return new InMemoryUserDetailsManager(user);
+    public DaoAuthenticationProvider authenticationProvider() {
+        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
+        authenticationProvider.setUserDetailsService(libraryUserDetailService);
+        authenticationProvider.setPasswordEncoder(passwordEncoder());
+        return authenticationProvider;
     }
 
 }
