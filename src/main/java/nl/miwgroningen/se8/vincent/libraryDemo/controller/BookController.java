@@ -58,6 +58,17 @@ public class BookController {
         }
     }
 
+    @GetMapping("/book/update/{bookTitle}")
+    protected String showUpdateBookForm(@PathVariable("bookTitle") String bookTitle, Model model) {
+        Optional<Book> book = bookRepository.findByTitle(bookTitle);
+        if (book.isEmpty()) {
+            return "redirect:/books";
+        }
+        model.addAttribute("book", book.get());
+        model.addAttribute("allAuthors", authorRepository.findAll());
+        return "bookForm";
+    }
+
     @GetMapping("/book/new")
     protected String createNewBook(Model model) {
         model.addAttribute("book", new Book());
@@ -66,7 +77,7 @@ public class BookController {
     }
 
     @PostMapping("/book/new")
-    protected String saveNewBook(@ModelAttribute("book") Book book, BindingResult result) {
+    protected String saveOrUpdateBook(@ModelAttribute("book") Book book, BindingResult result) {
         if (!result.hasErrors()) {
             bookRepository.save(book);
         }
